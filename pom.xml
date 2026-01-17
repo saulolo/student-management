@@ -14,9 +14,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>student-management</name>
     <description>
-		CRUD system for student management developed with Java 21, Spring Boot 4.x and Thymeleaf.
-		It allows you to register, consult, update and delete student information in a simple way, with a modern web
-		interface and clean architecture.
+        CRUD system for student management developed with Java 21, Spring Boot 4.x and Thymeleaf.
+        It allows you to register, consult, update and delete student information in a simple way, with a modern web
+        interface and clean architecture.
     </description>
     <properties>
         <java.version>21</java.version>
