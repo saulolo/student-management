@@ -36,7 +36,4 @@ public class StudentController {
         return "student/students";
     }
 
-    //TODO: Implementar el commandLineRuner en el metodo main para hacer pruebas
-
-
 }
