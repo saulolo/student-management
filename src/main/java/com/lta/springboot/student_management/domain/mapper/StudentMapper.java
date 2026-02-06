@@ -1,5 +1,6 @@
 package com.lta.springboot.student_management.domain.mapper;
 
+import com.lta.springboot.student_management.domain.dto.request.StudentRequestDTO;
 import com.lta.springboot.student_management.domain.dto.response.StudentResponseDTO;
 import com.lta.springboot.student_management.domain.entity.Student;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,9 @@ import java.util.List;
  */
 @Component
 public class StudentMapper {
+
+
+    // ========== ENTITY → RESPONSE DTO ==========
 
     /**
      * Convierte un objeto {@link Student} a {@link StudentResponseDTO}.
@@ -49,4 +53,43 @@ public class StudentMapper {
                 .map(this::toStudentResponseDTO)
                 .toList();
     }
+
+
+    // ========== REQUEST DTO → ENTITY ==========
+
+    /**
+     * Convierte un {@link StudentRequestDTO} a una entidad {@link Student}.
+     * Usado para CREAR un nuevo estudiante.
+     *
+     * @param studentRequestDTO el DTO con los datos del estudiante.
+     * @return entidad Student sin ID (será asignado por la BD).
+     */
+    public Student toEntity(StudentRequestDTO studentRequestDTO) {
+        if (studentRequestDTO == null) {
+            return null;
+        }
+
+        return Student.builder()
+                .name(studentRequestDTO.getName())
+                .lastName(studentRequestDTO.getLastName())
+                .email(studentRequestDTO.getEmail())
+                .build();
+    }
+
+    /**
+     * Actualiza una entidad {@link Student} existente con datos de {@link StudentRequestDTO}.
+     * Usado para EDITAR un estudiante.
+     *
+     * @param student           la entidad existente a actualizar.
+     * @param studentRequestDTO el DTO con los nuevos datos.
+     */
+    public void updateEntityFromDTO(Student student, StudentRequestDTO studentRequestDTO) {
+        if (student != null && studentRequestDTO != null) {
+            student.setName(studentRequestDTO.getName());
+            student.setLastName(studentRequestDTO.getLastName());
+            student.setEmail(studentRequestDTO.getEmail());
+        }
+    }
+
+
 }
