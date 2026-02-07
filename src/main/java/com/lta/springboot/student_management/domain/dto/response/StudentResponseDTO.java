@@ -7,8 +7,8 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 /**
- *  DTO de respuesta para exponer información de estudiantes
- *  al cliente o capa de presentación. Inmutable y serializable.
+ * DTO de respuesta para exponer información de estudiantes
+ * al cliente o capa de presentación. Inmutable y serializable.
  */
 @Builder
 @JsonPropertyOrder({"idStudent", "name", "lastName", "email", "createdAt", "updateAt"})
@@ -20,7 +20,5 @@ public record StudentResponseDTO(
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
         LocalDateTime createdAt,
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-        LocalDateTime updateAt
-
-) {
+        LocalDateTime updateAt) {
 }

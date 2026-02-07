@@ -38,7 +38,6 @@ public class StudentMapper {
                 .build();
     }
 
-
     /**
      * Convierte una lista de entidades {@link Student} a una lista de {@link StudentResponseDTO}.
      *
@@ -90,6 +89,5 @@ public class StudentMapper {
             student.setEmail(studentRequestDTO.getEmail());
         }
     }
-
 
 }

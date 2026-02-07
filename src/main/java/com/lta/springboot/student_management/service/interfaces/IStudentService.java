@@ -21,4 +21,29 @@ public interface IStudentService {
      * @return StudentResponseDTO con los datos del estudiante creado
      */
     StudentResponseDTO createStudent(StudentRequestDTO studentRequestDTO);
+
+    /**
+     * Busca un estudiante por su ID.
+     *
+     * @param id identificador único del estudiante
+     * @return StudentResponseDTO con los datos del estudiante encontrado
+     */
+    StudentResponseDTO findStudentById(Long id);
+
+    /**
+     * Actualiza los datos de un estudiante existente.
+     *
+     * @param id                identificador del estudiante a actualizar
+     * @param studentRequestDTO datos actualizados del estudiante
+     * @return StudentResponseDTO con los datos del estudiante actualizado
+     */
+    StudentResponseDTO updateStudent(Long id, StudentRequestDTO studentRequestDTO);
+
+    /**
+     * Elimina un estudiante del sistema por su ID.
+     *
+     * @param id identificador del estudiante a eliminar
+     */
+    void deleteStudentById(Long id);
+
 }

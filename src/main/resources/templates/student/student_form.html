@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Formulario Estudiantes</title>
+    <title th:text="${formTitle} ?: 'Formulario Estudiantes'">Formulario Estudiantes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
@@ -28,7 +28,9 @@
         <div class="col-lg-6 col-md-8 col-sm-10">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="text-center mb-0">Registro de Estudiantes</h2>
+                    <h2 class="text-center mb-0" th:text="${formTitle} ?: 'Registro de Estudiantes'">
+                        Registro de Estudiantes
+                    </h2>
                 </div>
                 <div class="card-body">
 
@@ -41,7 +43,10 @@
                     </div>
 
                     <!-- Formulario -->
-                    <form th:action="@{/students/save}" th:object="${student}" method="post">
+                    <!--noinspection HtmlUnknownAttribute -->
+                    <form th:action="${isEditMode} ? @{/students/update/{id}(id=${idStudent})} : @{/students/save}"
+                          th:object="${student}"
+                          method="post">
 
                         <!-- Campo Nombre -->
                         <div class="form-group">
@@ -91,7 +96,9 @@
                         <!-- Botones -->
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Guardar
+                                <i class="fas fa-save"></i>
+                                <span th:if="${isEditMode}">Actualizar</span>
+                                <span th:unless="${isEditMode}">Guardar</span>
                             </button>
                             <a th:href="@{/students/listStudents}" class="btn btn-danger">
                                 <i class="fas fa-times"></i> Cancelar
