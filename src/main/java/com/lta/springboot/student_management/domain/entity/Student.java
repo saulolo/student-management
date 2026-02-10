@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,12 +20,6 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Student {
-
-    public Student(String name, String lastName, String email) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,24 +36,21 @@ public class Student {
     @Column(nullable = false, length = 50, unique = true)
     String email;
 
-    @Setter(AccessLevel.NONE)
-    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     LocalDateTime createdAt;
 
-    @Setter(AccessLevel.NONE)
-    @Column(name = "update_at")
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    LocalDateTime updateAt;
+    LocalDateTime updatedAt;
 
-    @PrePersist
-    private void beforePersisting() {
-        this.createdAt = LocalDateTime.now();
-    }
 
-    @PreUpdate
-    private void notificationDate() {
-        this.updateAt = LocalDateTime.now();
+    public Student(String name, String lastName, String email) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
     }
 
 }
