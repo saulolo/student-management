@@ -34,7 +34,7 @@ public class StudentMapper {
                 .lastName(student.getLastName())
                 .email(student.getEmail())
                 .createdAt(student.getCreatedAt())
-                .updateAt(student.getUpdateAt())
+                .updateAt(student.getUpdatedAt())
                 .build();
     }
 

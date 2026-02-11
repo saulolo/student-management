@@ -1,0 +1,77 @@
+# ============================================
+# SERVICIOS
+# ============================================
+services:
+
+  # ------------------------------------------
+  # PostgreSQL Database
+  # ------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: student-management-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bd_docker_student_management_spring_boot_lta
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "1234"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - student-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ------------------------------------------
+  # Spring Boot Application
+  # ------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_DATE: ${BUILD_DATE:-2025-02-10T00:00:00Z}
+        VCS_REF: ${VCS_REF:-dev}
+        VERSION: 0.0.1-SNAPSHOT
+    container_name: student-management-app
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    environment:
+      # Database configuration (usa el nombre del servicio 'postgres' como host)
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bd_docker_student_management_spring_boot_lta
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "1234"
+
+      # JPA/Hibernate configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_OPEN_IN_VIEW: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+
+      # Server configuration
+      SERVER_PORT: 9090
+      SERVER_SERVLET_CONTEXT_PATH: /student-management/api/v1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - student-network
+
+# ============================================
+# VOLUMES (Persistencia de datos)
+# ============================================
+volumes:
+  postgres_data:
+    driver: local
+
+# ============================================
+# NETWORKS (Comunicación entre contenedores)
+# ============================================
+networks:
+  student-network:
+    driver: bridge
