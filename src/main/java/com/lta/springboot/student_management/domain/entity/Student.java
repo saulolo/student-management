@@ -31,7 +31,7 @@ public class Student {
     String name;
 
     @Column(name = "last_name", nullable = false, length = 50)
-    String lastName;
+    String lastname;
 
     @Column(nullable = false, length = 50, unique = true)
     String email;
@@ -49,7 +49,7 @@ public class Student {
 
     public Student(String name, String lastName, String email) {
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastName;
         this.email = email;
     }
 

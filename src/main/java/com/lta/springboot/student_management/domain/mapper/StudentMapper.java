@@ -31,10 +31,10 @@ public class StudentMapper {
         return StudentResponseDTO.builder()
                 .idStudent(student.getIdStudent())
                 .name(student.getName())
-                .lastName(student.getLastName())
+                .lastname(student.getLastname())
                 .email(student.getEmail())
                 .createdAt(student.getCreatedAt())
-                .updateAt(student.getUpdatedAt())
+                .updatedAt(student.getUpdatedAt())
                 .build();
     }
 
@@ -70,7 +70,7 @@ public class StudentMapper {
 
         return Student.builder()
                 .name(studentRequestDTO.getName())
-                .lastName(studentRequestDTO.getLastName())
+                .lastname(studentRequestDTO.getLastname())
                 .email(studentRequestDTO.getEmail())
                 .build();
     }
@@ -85,7 +85,7 @@ public class StudentMapper {
     public void updateEntityFromDTO(Student student, StudentRequestDTO studentRequestDTO) {
         if (student != null && studentRequestDTO != null) {
             student.setName(studentRequestDTO.getName());
-            student.setLastName(studentRequestDTO.getLastName());
+            student.setLastname(studentRequestDTO.getLastname());
             student.setEmail(studentRequestDTO.getEmail());
         }
     }
