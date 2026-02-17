@@ -65,17 +65,17 @@
 
                         <!-- Campo Apellido -->
                         <div class="form-group">
-                            <label for="lastName">Apellido: <span class="text-danger">*</span></label>
+                            <label for="lastname">Apellido: <span class="text-danger">*</span></label>
                             <input type="text"
                                    class="form-control"
-                                   th:field="*{lastName}"
-                                   th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid' : ''"
+                                   th:field="*{lastname}"
+                                   th:classappend="${#fields.hasErrors('lastname')} ? 'is-invalid' : ''"
                                    placeholder="Ingrese el apellido"
-                                   id="lastName"
-                                   name="lastName"
+                                   id="lastname"
+                                   name="lastname"
                                    required>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}"
-                                 th:errors="*{lastName}"></div>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastname')}"
+                                 th:errors="*{lastname}"></div>
                         </div>
 
                         <!-- Campo Email -->
