@@ -2,13 +2,13 @@ package com.lta.springboot.student_management.exception;
 
 import org.springframework.http.HttpStatus;
 
+import static com.lta.springboot.student_management.util.Constants.RESOURCE_NOT_FOUND;
+
 /**
  * Excepción lanzada cuando no se encuentra un recurso solicitado.
  * Mapea a HTTP 404 NOT FOUND.
  */
 public class ResourceNotFoundException extends ApiException{
-
-    private static final String ERROR_CODE = "RESOURCE_NOT_FOUND";
 
 
     /**
@@ -17,7 +17,7 @@ public class ResourceNotFoundException extends ApiException{
      * @param message mensaje descriptivo del recurso no encontrado
      */
     public ResourceNotFoundException(String message) {
-        super(message, HttpStatus.NOT_FOUND, ERROR_CODE);
+        super(message, HttpStatus.NOT_FOUND, RESOURCE_NOT_FOUND);
     }
 
     /**
@@ -27,6 +27,6 @@ public class ResourceNotFoundException extends ApiException{
      * @param cause   causa raíz de la excepción
      */
     public ResourceNotFoundException(String message, Throwable cause) {
-        super(message, HttpStatus.NOT_FOUND, ERROR_CODE, cause);
+        super(message, HttpStatus.NOT_FOUND, RESOURCE_NOT_FOUND, cause);
     }
 }

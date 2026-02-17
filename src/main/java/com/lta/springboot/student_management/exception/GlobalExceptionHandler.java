@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
+import static com.lta.springboot.student_management.util.Constants.INTERNAL_SERVER_ERROR;
+
 /**
  * Manejador global de excepciones para toda la aplicación.
  */
@@ -46,7 +48,7 @@ public class GlobalExceptionHandler {
         ApiResponseDTO<Void> response = ApiResponseDTO.<Void>builder()
                 .success(false)
                 .message("Ha ocurrido un error inesperado en el servidor.")
-                .errorCode("INTERNAL_SERVER_ERROR")
+                .errorCode(INTERNAL_SERVER_ERROR)
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
                 .build();
