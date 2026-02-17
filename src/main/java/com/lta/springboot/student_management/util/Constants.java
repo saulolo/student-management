@@ -1,5 +1,8 @@
 package com.lta.springboot.student_management.util;
 
+/**
+ * Contiene las constantes utilizadas en la aplicación
+ */
 public final class Constants {
 
     public static final String BAD_REQUEST = "BAD_REQUEST";
