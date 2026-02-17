@@ -84,7 +84,7 @@ public class StudentController {
 
             // Mensaje de éxito
             redirectAttributes.addFlashAttribute("successMessage",
-                    "Estudiante creado exitosamente: " + savedStudent.name() + " " + savedStudent.lastName());
+                    "Estudiante creado exitosamente: " + savedStudent.name() + " " + savedStudent.lastname());
 
             log.info("Estudiante guardado con éxito: {}", savedStudent.idStudent());
 
@@ -115,7 +115,7 @@ public class StudentController {
         // Convertir ResponseDTO a RequestDTO para el formulario
         StudentRequestDTO studentRequestDTO = new StudentRequestDTO();
         studentRequestDTO.setName(studentResponseDTO.name());
-        studentRequestDTO.setLastName(studentResponseDTO.lastName());
+        studentRequestDTO.setLastname(studentResponseDTO.lastname());
         studentRequestDTO.setEmail(studentResponseDTO.email());
 
         model.addAttribute("student", studentRequestDTO);
@@ -154,7 +154,7 @@ public class StudentController {
             StudentResponseDTO updatedStudent = iStudentService.updateStudent(id, studentRequestDTO);
 
             redirectAttributes.addFlashAttribute("successMessage", "Estudiante actualizado exitosamente "
-                    + updatedStudent.name() + " " + updatedStudent.lastName());
+                    + updatedStudent.name() + " " + updatedStudent.lastname());
             log.info("Estudiante actualizado con éxito. {}", updatedStudent.idStudent());
 
             return "redirect:/students/listStudents";
@@ -187,7 +187,7 @@ public class StudentController {
 
             // Mensaje de éxito
             redirectAttributes.addFlashAttribute("successMessage", "Estudiante eliminado exitosamente "
-                    + studentResponseDTO.name() + " " + studentResponseDTO.lastName());
+                    + studentResponseDTO.name() + " " + studentResponseDTO.lastname());
             log.info("El Estudiante con ID: {}, se ha eliminado con éxito.", id);
 
         } catch (Exception e) {

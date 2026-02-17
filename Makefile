@@ -181,6 +181,13 @@ db-reset: ## Resetear base de datos (⚠️ BORRA DATOS) - Base de Datos
 # ============================================
 # TESTING
 # ============================================
+# ============= TEST/JACOCO (en contenedor) ===========
+
+.PHONY: maven-clean
+maven-clean: ## Limpiar artefactos y carpetas generadas (Maven clean) dentro del contenedor
+	@echo "$(YELLOW)🧹 Limpiando target y archivos generados del contenedor...$(NC)"
+	@docker exec -it $(CONTAINER_APP) sh -c "mvn clean"
+	@echo "$(GREEN)✅ Limpieza Maven en contenedor completada$(NC)"
 
 .PHONY: test
 test: ## Ejecutar suite de tests dentro del contenedor
@@ -203,6 +210,45 @@ test-unit: ## Ejecutar solo tests unitarios
 test-integration: ## Ejecutar solo tests de integración
 	@echo "$(BLUE)🧪 Ejecutando tests de integración...$(NC)"
 	@docker exec -it $(CONTAINER_APP) sh -c "mvn test -Dtest=*IntegrationTest"
+
+.PHONY: test-coverage-check
+test-coverage-check: ## Verificar cobertura mínima Jacoco (en contenedor)
+	@echo "$(BLUE)🔍 Verificando cobertura mínima...$(NC)"
+	@docker exec -it $(CONTAINER_APP) sh -c "mvn jacoco:check"
+
+.PHONY: test-coverage-report
+test-coverage-report: ## Generar solo el reporte de cobertura (en contenedor)
+	@echo "$(CYAN)📊 Generando reporte Jacoco...$(NC)"
+	@docker exec -it $(CONTAINER_APP) sh -c "mvn jacoco:report"
+
+.PHONY: test-verify
+test-verify: ## Limpiar, testear, verificar cobertura y paquete (en contenedor)
+	@echo "$(BLUE)🔎 Ejecutando verificación completa...$(NC)"
+	@docker exec -it $(CONTAINER_APP) sh -c "mvn clean verify"
+
+# ============= TEST LOCAL OPCIONAL ==============
+.PHONY: local-maven-clean
+local-maven-clean: ## Limpiar artefactos y carpetas generadas (Maven clean) en local
+	@echo "$(YELLOW)🧹 Limpiando target y archivos generados localmente...$(NC)"
+	mvn clean
+	@echo "$(GREEN)✅ Limpieza Maven en local completada$(NC)"
+
+.PHONY: local-test
+local-test: ## Ejecutar tests unitarios MAVEN en local
+	@echo "$(BLUE)🧪 Ejecutando tests unitarios localmente...$(NC)"
+	mvn clean test
+
+.PHONY: local-coverage
+local-coverage: ## Ejecutar tests y generar cobertura localmente
+	@echo "$(BLUE)🧪 Ejecutando tests con cobertura (local)...$(NC)"
+	mvn clean test jacoco:report
+	@echo "$(GREEN)✅ Reporte Jacoco en: target/site/jacoco/index.html$(NC)"
+
+.PHONY: local-coverage-check
+local-coverage-check: ## Verificar cobertura mínima localmente
+	@echo "$(BLUE)🔍 Verificando cobertura mínima (local)...$(NC)"
+	mvn jacoco:check
+
 
 # ============================================
 # INFORMACIÓN Y UTILIDADES

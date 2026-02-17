@@ -76,7 +76,7 @@ public class StudentServiceImpl implements IStudentService {
         log.info("Buscando estudiante con ID: {}", id);
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante con ID " + id + " no encontrado"));
-        log.info("Estudiante encontrado: {} {}", student.getName(), student.getLastName());
+        log.info("Estudiante encontrado: {} {}", student.getName(), student.getLastname());
         return studentMapper.toStudentResponseDTO(student);
     }
 
@@ -99,7 +99,7 @@ public class StudentServiceImpl implements IStudentService {
 
         Student updatedStudent = studentRepository.save(student);
         log.info("Estudiante actualizado exitosamente: {} {} {}", student.getIdStudent(), student.getName(),
-                student.getLastName());
+                student.getLastname());
 
         return studentMapper.toStudentResponseDTO(updatedStudent);
     }
@@ -119,6 +119,6 @@ public class StudentServiceImpl implements IStudentService {
 
         studentRepository.deleteById(id);
         log.info("Estudiante eliminado exitosamente - ID: {}, Nombre: {} {}",
-                id, student.getName(), student.getLastName());
+                id, student.getName(), student.getLastname());
     }
 }
