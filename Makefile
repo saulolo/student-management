@@ -226,6 +226,18 @@ test-verify: ## Limpiar, testear, verificar cobertura y paquete (en contenedor)
 	@echo "$(BLUE)🔎 Ejecutando verificación completa...$(NC)"
 	@docker exec -it $(CONTAINER_APP) sh -c "mvn clean verify"
 
+.PHONY: open-coverage
+open-coverage: ## Abrir el reporte de cobertura Jacoco en el navegador (local)
+	@echo "$(BLUE)🌐 Abriendo reporte Jacoco...$(NC)"
+	@if command -v xdg-open > /dev/null 2>&1; then \
+		xdg-open ./jacoco-report/index.html; \
+	elif command -v open > /dev/null 2>&1; then \
+		open ./jacoco-report/index.html; \
+	else \
+		echo "$(YELLOW)Abre manualmente: ./jacoco-report/index.html$(NC)"; \
+	fi
+
+
 # ============= TEST LOCAL OPCIONAL ==============
 .PHONY: local-maven-clean
 local-maven-clean: ## Limpiar artefactos y carpetas generadas (Maven clean) en local
@@ -248,6 +260,21 @@ local-coverage: ## Ejecutar tests y generar cobertura localmente
 local-coverage-check: ## Verificar cobertura mínima localmente
 	@echo "$(BLUE)🔍 Verificando cobertura mínima (local)...$(NC)"
 	mvn jacoco:check
+
+.PHONY: export-coverage
+export-coverage: ## Copiar el reporte Jacoco del contenedor a la máquina local
+	@docker cp $(CONTAINER_APP):/app/target/site/jacoco ./jacoco-report
+	@echo "$(GREEN)✅ Reporte Jacoco exportado a ./jacoco-report/index.html$(NC)"
+
+.PHONY: local-open-coverage
+local-open-coverage: ## Abre el reporte Jacoco local directamente
+	@if command -v xdg-open > /dev/null 2>&1; then \
+		xdg-open target/site/jacoco/index.html; \
+	elif command -v open > /dev/null 2>&1; then \
+		open target/site/jacoco/index.html; \
+	else \
+		echo "$(YELLOW)Abre manualmente: target/site/jacoco/index.html$(NC)"; \
+	fi
 
 
 # ============================================
@@ -289,6 +316,9 @@ open: ## Abrir la aplicación en el navegador
 	else \
 		echo "$(YELLOW)Abre manualmente: http://localhost:9090/student-management/api/v1/actuator/health$(NC)"; \
 	fi
+
+.PHONY: full-coverage
+full-coverage: test-coverage export-coverage open-coverage ## Genera, exporta y abre el reporte Jacoco
 
 # ============================================
 # LIMPIEZA AVANZADA

@@ -70,10 +70,10 @@
         <tr th:each="student : ${students}">
             <td th:text="${student.idStudent}"></td>
             <td th:text="${student.name}"></td>
-            <td th:text="${student.lastName}"></td>
+            <td th:text="${student.lastname}"></td>
             <td th:text="${student.email}"></td>
             <td th:text="${student.createdAt}"></td>
-            <td th:text="${student.updateAt}"></td>
+            <td th:text="${student.updatedAt}"></td>
             <td>
                 <!-- Botón Editar -->
                 <a th:href="@{'/students/edit/' + ${student.idStudent}}" class="btn btn-sm btn-info">Editar</a>
